@@ -1,0 +1,7 @@
+name: 'medical_warehouse'
+version: '1.0.0'
+profile: 'medical_warehouse'
+config-version: 2
+model-paths: ["models"]
+target-path: "target"
+clean-targets: ["target"]
