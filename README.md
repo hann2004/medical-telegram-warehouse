@@ -80,5 +80,3 @@ This project builds a robust, production-ready data pipeline for collecting, sto
 ## License
 
 See `LICENSE` for details.
-
-# medical-telegram-warehouse
