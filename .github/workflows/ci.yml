@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - task-2
+  push:
+    branches:
+      - task-2
+
+jobs:
+  dbt-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: medical_user
+          POSTGRES_PASSWORD: nabi25
+          POSTGRES_DB: medical_warehouse
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U medical_user" --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: medical_warehouse
+      DB_USER: medical_user
+      DB_PASSWORD: nabi25
+      DB_SCHEMA: raw
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install dbt-postgres
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h localhost -p 5432 -U medical_user; do sleep 2; done
+      - name: Create schema
+        run: |
+          psql -h localhost -U medical_user -d medical_warehouse -c "CREATE SCHEMA IF NOT EXISTS raw;"
+      - name: Run dbt deps
+        run: dbt deps --project-dir medical_warehouse
+      - name: Run dbt seed (optional)
+        run: echo "No seed step needed"
+      - name: Run dbt run
+        run: dbt run --project-dir medical_warehouse --profiles-dir medical_warehouse
+      - name: Run dbt test
+        run: dbt test --project-dir medical_warehouse --profiles-dir medical_warehouse
