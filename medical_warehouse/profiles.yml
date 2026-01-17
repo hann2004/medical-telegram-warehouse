@@ -4,9 +4,9 @@ medical_warehouse:
     dev:
       type: postgres
       host: localhost
-      user: user
-      password: password
+      user: medical_user
+      password: nabi25
       port: 5432
       dbname: medical_warehouse
-      schema: public
+      schema: raw
       threads: 1
