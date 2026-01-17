@@ -1,0 +1,16 @@
+                          Table "raw.telegram_messages"
+      Column      |            Type             | Collation | Nullable | Default 
+------------------+-----------------------------+-----------+----------+---------
+ message_id       | bigint                      |           |          | 
+ channel_name     | text                        |           |          | 
+ message_date     | timestamp without time zone |           |          | 
+ message_text     | text                        |           |          | 
+ has_media        | boolean                     |           |          | 
+ image_path       | text                        |           |          | 
+ views            | integer                     |           |          | 
+ forwards         | integer                     |           |          | 
+ scraped_at       | timestamp without time zone |           |          | 
+ message_length   | integer                     |           |          | 
+ contains_price   | boolean                     |           |          | 
+ contains_contact | boolean                     |           |          | 
+

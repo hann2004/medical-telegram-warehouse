@@ -9,7 +9,8 @@ with base as (
         views as view_count,
         forwards as forward_count,
         has_image,
-        valid_message
+        valid_message,
+        image_path
     from "medical_warehouse"."raw"."stg_telegram_messages"
     where valid_message
 )
@@ -21,7 +22,8 @@ select
     b.message_length,
     b.view_count,
     b.forward_count,
-    b.has_image
+    b.has_image,
+    b.image_path
 from base b
 left join "medical_warehouse"."raw"."dim_channels" c on b.channel_name = c.channel_name
 left join "medical_warehouse"."raw"."dim_dates" d on cast(b.message_date as date) = d.full_date
