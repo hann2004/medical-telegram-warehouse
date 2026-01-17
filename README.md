@@ -71,6 +71,61 @@ This project builds a robust, production-ready data pipeline for collecting, sto
 - **Fact Table**: `fct_messages` (message_id, channel_key, date_key, metrics)
 - **Dimensions**: `dim_channels` (channel info), `dim_dates` (date info)
 
+## Task 3: YOLO Image Enrichment
+
+## Task 4: Analytical API (FastAPI)
+
+## Task 5: Pipeline Orchestration (Dagster)
+
+- **Dagster Pipeline**: Orchestrates the entire workflow (scraping, loading, dbt, YOLO) in `pipeline.py`.
+- **Scheduling**: Daily schedule at 2:00 AM, configurable in code.
+- **Failure Alerts**: Console alert on failure (can be extended to email/Slack).
+- **UI Monitoring**: Visualize and trigger runs in Dagster UI ([http://127.0.0.1:3000](http://127.0.0.1:3000)).
+
+### Usage
+
+1. **Install Dagster**:
+   ```bash
+   pip install dagster dagster-webserver
+   ```
+2. **Start Dagster**:
+   ```bash
+   dagster dev -f pipeline.py
+   ```
+3. **Open Dagster UI**: [http://127.0.0.1:3000](http://127.0.0.1:3000)
+4. **Trigger pipeline**: Launch runs and monitor schedules in the UI.
+
+- **FastAPI App**: Exposes analytics endpoints in `api/main.py` for querying message and detection data.
+- **Endpoints**: Channel stats, message trends, top detections, and more.
+- **Schema & Filtering**: Uses Pydantic schemas and stopword filtering for robust analytics.
+
+### Usage
+
+1. **Install API dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. **Run the API**:
+   ```bash
+   uvicorn api.main:app --reload
+   ```
+3. **Access docs**: Visit [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+- **YOLOv8 Inference**: Detects objects in scraped images using YOLOv8 (`src/yolo_detect.py`).
+- **Results Storage**: Detection results are saved to `data/yolo_detections.csv` and loaded into PostgreSQL via `scripts/load_yolo_to_postgres.py`.
+- **dbt Model**: `fct_image_detections` fact table for enriched image analytics.
+
+### Usage
+
+1. **Run YOLO Detection**:
+   ```bash
+   python src/yolo_detect.py
+   ```
+2. **Load YOLO Results to PostgreSQL**:
+   ```bash
+   python scripts/load_yolo_to_postgres.py
+   ```
+
 ## Notes
 
 - All code and models are production-ready and validated.

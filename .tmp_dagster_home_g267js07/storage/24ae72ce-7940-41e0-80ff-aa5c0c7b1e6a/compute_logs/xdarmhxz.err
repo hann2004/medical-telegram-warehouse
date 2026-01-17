@@ -1,0 +1,2 @@
+[32m2026-01-18 01:57:31 +0300[0m - dagster - [34mDEBUG[0m - medical_telegram_pipeline - 24ae72ce-7940-41e0-80ff-aa5c0c7b1e6a - 154763 - LOGS_CAPTURED - Started capturing logs in process (pid: 154763).
+[32m2026-01-18 01:57:31 +0300[0m - dagster - [34mDEBUG[0m - medical_telegram_pipeline - 24ae72ce-7940-41e0-80ff-aa5c0c7b1e6a - 154763 - run_yolo_enrichment - STEP_START - Started execution of step "run_yolo_enrichment".
