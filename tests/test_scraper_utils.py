@@ -1,7 +1,7 @@
 import pytest
 from src.scraper import TelegramScraper
 
-scraper = TelegramScraper()
+scraper = TelegramScraper.__new__(TelegramScraper)  # Create instance without __init__
 
 def test_contains_price():
     assert scraper._contains_price("Price: 100 ETB")
