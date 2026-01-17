@@ -1,0 +1,52 @@
+version: 2
+models:
+  - name: dim_channels
+    description: "Dimension table for Telegram channels."
+    columns:
+      - name: channel_key
+        description: "Surrogate key for channel."
+        tests:
+          - unique
+          - not_null
+      - name: channel_name
+        description: "Name of the Telegram channel."
+        tests:
+          - not_null
+  - name: dim_dates
+    description: "Date dimension for time-based analysis."
+    columns:
+      - name: date_key
+        description: "Surrogate key for date."
+        tests:
+          - unique
+          - not_null
+      - name: full_date
+        description: "Full date value."
+        tests:
+          - not_null
+  - name: fct_messages
+    description: "Fact table for Telegram messages."
+    columns:
+      - name: message_id
+        description: "Unique identifier for each message."
+        tests:
+          - not_null
+      - name: channel_key
+        description: "Foreign key to dim_channels."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_channels')
+              field: channel_key
+      - name: date_key
+        description: "Foreign key to dim_dates."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_dates')
+              field: date_key
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - channel_key
+            - message_id
