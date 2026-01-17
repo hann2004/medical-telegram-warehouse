@@ -24,8 +24,8 @@ models:
         description: "Full date value."
         tests:
           - not_null
-  - name: fct_messages
-    description: "Fact table for Telegram messages."
+  - name: fct_image_detections
+    description: "Fact table for YOLO image detections joined with messages."
     columns:
       - name: message_id
         description: "Unique identifier for each message."
@@ -45,8 +45,19 @@ models:
           - relationships:
               to: ref('dim_dates')
               field: date_key
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - channel_key
-            - message_id
+      - name: detected_class
+        description: "YOLO detected class index."
+        tests:
+          - not_null
+      - name: confidence_score
+        description: "YOLO detection confidence score."
+        tests:
+          - not_null
+      - name: image_category
+        description: "Image category (promotional, product_display, lifestyle, other)."
+        tests:
+          - not_null
+      - name: image_path
+        description: "Path to the image file."
+        tests:
+          - not_null

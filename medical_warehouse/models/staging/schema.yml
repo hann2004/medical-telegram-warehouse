@@ -4,6 +4,7 @@ sources:
     schema: raw
     tables:
       - name: telegram_messages
+      - name: yolo_detections
 models:
   - name: stg_telegram_messages
     description: "Staging model for cleaned Telegram messages."
